@@ -14,6 +14,7 @@ from datetime import datetime, timedelta
 from pathlib import Path
 
 import bezrealitky
+import cinzak
 import config
 import idnes
 import sreality
@@ -49,6 +50,7 @@ def db():
         id text primary key, zdroj text, obec text, okres text, kraj text,
         dispozice text, plocha integer, najem integer, last_seen text);
     create table if not exists meta(k text primary key, v text);
+    create table if not exists od(id text primary key, since text, fetched text);
     """)
     return con
 
@@ -94,13 +96,14 @@ def statistiky_najmu(rows):
 
 def odhad_m2(stat, obec, okres, kraj, disp):
     """Vrátí (Kč/m², jistota, popis vzorku)."""
+    nazev = "byty" if disp == "*" else disp
     pokusy = [
-        (("obec", obec, disp), config.VZOREK_VYSOKA, "vysoká", f"{disp} v obci"),
-        (("obec", obec, disp), config.VZOREK_STREDNI, "střední", f"{disp} v obci"),
+        (("obec", obec, disp), config.VZOREK_VYSOKA, "vysoká", f"{nazev} v obci"),
+        (("obec", obec, disp), config.VZOREK_STREDNI, "střední", f"{nazev} v obci"),
         (("obec", obec, "*"), config.VZOREK_VYSOKA, "střední", "všechny byty v obci"),
-        (("okres", okres, disp), config.VZOREK_STREDNI, "nízká", f"{disp} v okrese"),
+        (("okres", okres, disp), config.VZOREK_STREDNI, "nízká", f"{nazev} v okrese"),
         (("okres", okres, "*"), config.VZOREK_STREDNI, "nízká", "všechny byty v okrese"),
-        (("kraj", kraj, disp), config.VZOREK_STREDNI, "nízká", f"{disp} v kraji"),
+        (("kraj", kraj, disp), config.VZOREK_STREDNI, "nízká", f"{nazev} v kraji"),
     ]
     for key, minimum, jistota, popis in pokusy:
         if key in stat and stat[key][1] >= minimum:
@@ -303,6 +306,34 @@ def _sreality_detail(hash_id):
     return (int(up) if up else None), (d.get("advert_description") or "")
 
 
+def doplnit_od(con, vysledky):
+    """Od kdy se nemovitost inzeruje: Sreality to mají v detailu, u ostatních portálů datum, kdy jsme ji poprvé viděli."""
+    zbyva = config.DETAIL_MAX_SREALITY
+    for x in vysledky:
+        since = None
+        if x["zdroj"] == "Sreality":
+            row = con.execute("select since from od where id=?", (x["id"],)).fetchone()
+            if row:
+                since = row[0]
+            elif zbyva > 0:
+                zbyva -= 1
+                try:
+                    since = sreality.detail(x["id"].split(":")[1]).get("since")
+                except Exception as e:
+                    log("  datum selhalo", x["id"], e)
+                else:
+                    con.execute("insert or replace into od values(?,?,?)", (x["id"], since, x["first_seen"]))
+                time.sleep(config.REQUEST_PAUSE / 2)
+        prvni = (x["first_seen"] or "")[:10]
+        if since and since <= prvni:
+            x["inzerovano_od"], x["inzerovano_presne"] = since, True
+        else:
+            x["inzerovano_od"], x["inzerovano_presne"] = prvni, False
+    con.commit()
+    if zbyva <= 0:
+        log("  datum zveřejnění: limit detailů vyčerpán, zbytek v dalším běhu")
+
+
 # ---------- hlavní běh ----------
 
 def main():
@@ -326,6 +357,7 @@ def main():
     meta_set(con, "okres_kraj", okres_kraj)
 
     vysledky, podle_klice = [], {}
+    limity = {"idnes": config.DETAIL_MAX_IDNES}
     for x in nabidky:
         cena = x["cena"]
         if cena < 100_000 or cena > config.CENA_MAX:
@@ -345,7 +377,11 @@ def main():
                 najem = round(m2 * x["plocha"])
         else:
             row = con.execute("select plocha, popis from detaily where id=?", (x["id"],)).fetchone()
-            if not row:
+            if not row and x["zdroj"] == "iDNES" and limity["idnes"] <= 0:
+                row = (None, "")  # detail se stáhne v některém z dalších běhů
+            elif not row:
+                if x["zdroj"] == "iDNES":
+                    limity["idnes"] -= 1
                 try:
                     row = detail_fn()
                 except Exception as e:
@@ -355,15 +391,25 @@ def main():
                 con.execute("insert or replace into detaily values(?,?,?,?)", (x["id"], dnes, *row))
                 con.commit()
             x["plocha"] = row[0] or x["plocha"]
+            x["pocet_bytu"], x["pocet_citace"] = cinzak.pocet_bytu(row[1])
+            x["plocha_bytu"], x["plocha_citace"] = cinzak.plocha_bytu(row[1], x["plocha"])
+            # bez výslovného počtu bytů nejde z metrů poznat, kolik je skutečně k pronájmu
+            x["k_provereni"] = x["pocet_bytu"] is None
             najem, citace = najem_z_popisu(row[1], cena)
             if najem:
                 jistota, zdroj_najmu = "z inzerátu", "uvedeno v inzerátu"
             else:
                 m2, jistota, zdroj_najmu = odhad_m2(stat, x["obec"], x["okres"], x["kraj"], "*")
-                if m2 and x["plocha"]:
-                    najem = round(m2 * x["plocha"] * config.CINZAK_PODIL_PLOCHY)
-                    # u činžáku nevíme stav ani podíl bytů na ploše, odhad je vždy hrubý
-                    jistota, zdroj_najmu = "nízká", "odhad z plochy × " + zdroj_najmu
+                if m2 and (x["plocha_bytu"] or x["plocha"]):
+                    if x["plocha_bytu"]:
+                        zaklad = x["plocha_bytu"]
+                        popis_plochy = f"{zaklad} m² bytů z inzerátu"
+                    else:
+                        zaklad = x["plocha"] * config.CINZAK_PODIL_PLOCHY
+                        popis_plochy = f"{round(config.CINZAK_PODIL_PLOCHY * 100)} % z {x['plocha']} m² celkem"
+                    najem = round(m2 * zaklad)
+                    # u činžáku nevíme stav ani skutečné nájmy, odhad je vždy hrubý
+                    jistota, zdroj_najmu = "nízká", f"odhad: {popis_plochy} × {round(m2)} Kč/m² ({zdroj_najmu})"
         if not najem:
             continue
 
@@ -396,6 +442,7 @@ def main():
         vysledky.append(x)
     con.commit()
 
+    doplnit_od(con, vysledky)
     vysledky.sort(key=lambda v: -v["cashflow"])
     OUT.parent.mkdir(exist_ok=True)
     meta = {

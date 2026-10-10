@@ -44,7 +44,7 @@ class Chyba(RuntimeError):
 def _fetch(url, pokus=1):
     """Vrátí HTML, None pro 404 (konec výpisu), jinak po 4 pokusech vyhodí Chyba."""
     try:
-        with urllib.request.urlopen(urllib.request.Request(url, headers=HEADERS), timeout=30) as r:
+        with urllib.request.urlopen(urllib.request.Request(url, headers=HEADERS), timeout=20) as r:
             html = r.read().decode("utf-8", "replace")
     except http.client.IncompleteRead as e:
         # iDNES občas useknou odpověď, přijatá část bývá použitelná

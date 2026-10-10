@@ -86,6 +86,7 @@ tbody tr { cursor: pointer; }
 .pill.nizka { color: var(--neg); border-color: currentColor; }
 .pill.new { background: var(--accent); color: var(--surface); border-color: var(--accent); }
 .pill.drop { color: var(--pos); border-color: currentColor; }
+.pill.check { background: var(--warn-soft); color: var(--warn); border-color: var(--warn); }
 .typ { font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--accent); font-weight: 600; }
 tr.detail td { background: var(--bg); cursor: default; }
 .det { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 10px 24px; font-size: 13px; }
@@ -150,6 +151,7 @@ tr.detail td { background: var(--bg); cursor: default; }
         <label><input type="checkbox" id="f-new"> jen nové (48 h)</label>
         <label><input type="checkbox" id="f-drop"> jen zlevněné</label>
         <label><input type="checkbox" id="f-sus"> i podezřelé</label>
+        <label><input type="checkbox" id="f-chk"> skrýt k prověření</label>
       </div>
     </div>
     <div class="f mobsort"><label for="f-sort">Řadit</label>
@@ -160,7 +162,8 @@ tr.detail td { background: var(--bg); cursor: default; }
         <option value="cena:asc">Cena ↑</option>
         <option value="cena:desc">Cena ↓</option>
         <option value="cena_m2:asc">Cena za m² ↑</option>
-        <option value="first_seen:desc">Nejnovější</option>
+        <option value="inzerovano_od:desc">Nejčerstvější inzeráty</option>
+        <option value="inzerovano_od:asc">Nejdéle inzerované</option>
       </select>
     </div>
     <button type="button" class="reset" id="reset">Zrušit filtry</button>
@@ -182,7 +185,7 @@ tr.detail td { background: var(--bg); cursor: default; }
           <th class="sort r" data-k="cashflow" aria-sort="descending">Cashflow</th>
           <th class="sort r" data-k="vynos">Výnos</th>
           <th class="sort" data-k="jistota">Jistota</th>
-          <th class="sort" data-k="first_seen">Přidáno</th>
+          <th class="sort r" data-k="inzerovano_od" title="Od kdy se nemovitost inzeruje">Inzerováno</th>
         </tr>
       </thead>
       <tbody id="tbody"></tbody>
@@ -227,12 +230,12 @@ function filtered() {
   const cf = Number($("#f-cf").value || -1e9), cena = Number($("#f-cena").value || 1e12);
   const kraj = $("#f-kraj").value, disp = $("#f-disp").value, q = $("#f-q").value.trim().toLowerCase();
   const jist = new Set([...document.querySelectorAll("#f-jist input:checked")].map((i) => i.value));
-  const onlyNew = $("#f-new").checked, onlyDrop = $("#f-drop").checked, sus = $("#f-sus").checked;
+  const onlyNew = $("#f-new").checked, onlyDrop = $("#f-drop").checked, sus = $("#f-sus").checked, hideChk = $("#f-chk").checked;
   const out = DATA.filter((x) =>
     (!state.typ || x.typ === state.typ) && x.cashflow >= cf && x.cena <= cena &&
     (!kraj || x.kraj === kraj) && (!disp || x.dispozice === disp) && jist.has(x.jistota) &&
     (!q || (x.obec + " " + (x.ulice || "") + " " + (x.okres || "")).toLowerCase().includes(q)) &&
-    (!onlyNew || isNew(x)) && (!onlyDrop || isDrop(x)) && (sus || !x.podezrele));
+    (!onlyNew || isNew(x)) && (!onlyDrop || isDrop(x)) && (sus || !x.podezrele) && (!hideChk || !x.k_provereni));
   const k = state.sortK, dir = state.sortDir === "asc" ? 1 : -1;
   const val = (x) => k === "jistota" ? JIST_ORDER[x.jistota] || 0 : x[k];
   out.sort((a, b) => {
@@ -248,9 +251,16 @@ function filtered() {
 function badges(x) {
   let b = "";
   if (isNew(x)) b += ' <span class="pill new">nové</span>';
+  if (x.k_provereni) b += ' <span class="pill check" title="V inzerátu není uvedený počet bytů">k prověření</span>';
   if (x.podezrele) b += ' <span class="pill nizka">ověřit data</span>';
   if (isDrop(x)) b += ` <span class="pill drop">zlevněno o ${fmt.format(x.cena_puvodni - x.cena)} Kč</span>`;
   return b;
+}
+function dni(x) { const d = parseDate(x.inzerovano_od); return d ? Math.max(0, Math.round((Date.now() - d) / 864e5)) : null; }
+function datum(s) { return s ? s.slice(0, 10).split("-").reverse().map(Number).join(". ") : "–"; }
+function inzCell(x) {
+  const n = dni(x);
+  return `${x.inzerovano_presne ? "" : "≥ "}${n ?? "–"} dní<div class="sub">${x.inzerovano_presne ? "od " : "vidíme od "}${datum(x.inzerovano_od)}</div>`;
 }
 function cfCell(v) { return `<span class="cf ${v >= 0 ? "pos" : "neg"}">${v >= 0 ? "+" : "−"}${fmt.format(Math.abs(v))} Kč</span>`; }
 function jistPill(x) { return `<span class="pill ${JIST_CLASS[x.jistota] || ""}">${esc(x.jistota)}</span>`; }
@@ -262,9 +272,11 @@ function detailHtml(x) {
   return `<dl class="det">
     <div><dt>Odhad nájmu</dt><dd>${kc(x.najem)} měsíčně${x.najem_m2 ? ` (${fmt.format(x.najem_m2)} Kč/m²)` : ""}<br><span class="sub">${esc(x.najem_zdroj)}</span>
       ${x.najem_citace ? `<blockquote>„${esc(x.najem_citace)}“</blockquote>` : ""}</dd></div>
+    ${x.typ === "činžák" ? `<div><dt>Byty v domě</dt><dd>${x.pocet_bytu ? `${x.pocet_bytu} bytů` : "Počet bytů v inzerátu není, k prověření"}${x.plocha_bytu ? `, ${fmt.format(x.plocha_bytu)} m² bytové plochy` : ""}
+      ${x.pocet_citace ? `<blockquote>„${esc(x.pocet_citace)}“</blockquote>` : ""}${x.plocha_citace ? `<blockquote>„${esc(x.plocha_citace)}“</blockquote>` : ""}</dd></div>` : ""}
     <div><dt>Splátka</dt><dd>${kc(x.splatka)} měsíčně z úvěru ${kc(x.cena * (META.ltv || 1))}<br><span class="sub">${(META.sazba * 100).toLocaleString("cs-CZ")} %, ${META.splatnost} let</span></dd></div>
     <div><dt>Lokalita</dt><dd>${esc([x.ulice, x.obec].filter(Boolean).join(", "))}<br><span class="sub">okres ${esc(x.okres || "–")}, ${esc(x.kraj || "")}, ${fmt.format(x.obyvatel)} obyvatel</span></dd></div>
-    <div><dt>Inzerát</dt><dd>${sources(x)}<br><span class="sub">poprvé viděno ${esc(x.first_seen)}${x.cena_puvodni && x.cena_puvodni !== x.cena ? `, původní cena ${kc(x.cena_puvodni)}` : ""}</span></dd></div>
+    <div><dt>Inzerát</dt><dd>${sources(x)}<br><span class="sub">${x.inzerovano_presne ? `inzerováno od ${datum(x.inzerovano_od)} (${dni(x)} dní)` : `přesné datum portál neuvádí, sledujeme od ${datum(x.inzerovano_od)}`}${x.cena_puvodni && x.cena_puvodni !== x.cena ? `, původní cena ${kc(x.cena_puvodni)}` : ""}</span></dd></div>
   </dl>`;
 }
 
@@ -294,7 +306,7 @@ function render() {
       <td class="r">${cfCell(x.cashflow)}</td>
       <td class="r num">${x.vynos.toLocaleString("cs-CZ")} %</td>
       <td>${jistPill(x)}</td>
-      <td class="num sub">${esc((x.first_seen || "").slice(5, 10).split("-").reverse().join(". "))}.</td>
+      <td class="r num">${inzCell(x)}</td>
     </tr>${state.open === x.id ? `<tr class="detail"><td colspan="11">${detailHtml(x)}</td></tr>` : ""}`).join("");
   $("#cards").innerHTML = shown.slice(0, 200).map((x) => `
     <article class="card">
@@ -303,7 +315,7 @@ function render() {
       <div class="kv">
         <div><span>Cena</span><b class="num">${mil(x.cena)}</b></div>
         <div><span>Nájem</span><b class="num">${kc(x.najem)}</b></div>
-        <div><span>Výnos</span><b class="num">${x.vynos.toLocaleString("cs-CZ")} %</b></div>
+        <div><span>Inzerováno</span><b class="num">${x.inzerovano_presne ? "" : "≥ "}${dni(x) ?? "–"} dní</b></div>
       </div>
       <div class="row sub"><span>${esc(x.najem_zdroj)}</span>${jistPill(x)}</div>
     </article>`).join("");
@@ -329,7 +341,7 @@ function summary() {
     <div><span>Byty / činžáky</span><strong>${fmt.format(byty)} / ${fmt.format(ok.length - byty)}</strong></div>
     <div><span>Nové za 48 h</span><strong>${fmt.format(novych)}</strong></div>
     <div><span>Nejlepší cashflow</span><strong>${isFinite(best) ? (best >= 0 ? "+" : "−") + fmt.format(Math.abs(best)) : "–"}</strong></div>`;
-  $("#note").textContent = `Cashflow = odhad měsíčního nájmu − anuitní splátka úvěru ve výši ${Math.round(m.ltv * 100)} % kupní ceny. Bez nákladů na správu, fond oprav, pojištění a neobsazenost. Nájem bytů je medián Kč/m² z aktuálních pronájmů stejné dispozice v obci (${fmt.format(m.najmu_v_modelu || 0)} inzerátů pronájmu z posledních 14 dní). U činžáků se bere nájem uvedený v inzerátu, jinak odhad z užitné plochy. Skryté jsou podezřelé nabídky s hrubým výnosem nad 15 % nebo bytem přes dvojnásobek obvyklé plochy dispozice (obvykle chyba v inzerátu, nebytový prostor nebo dům k demolici), zobrazíš je zaškrtnutím „i podezřelé“. Obce od ${fmt.format(m.min_obyvatel)} obyvatel (${m.obci} obcí, ČSÚ). Zdroje: Sreality, Bezrealitky, iDNES Reality.`;
+  $("#note").textContent = `Cashflow = odhad měsíčního nájmu − anuitní splátka úvěru ve výši ${Math.round(m.ltv * 100)} % kupní ceny. Bez nákladů na správu, fond oprav, pojištění a neobsazenost. Nájem bytů je medián Kč/m² z aktuálních pronájmů stejné dispozice v obci (${fmt.format(m.najmu_v_modelu || 0)} inzerátů pronájmu z posledních 14 dní). U činžáků se bere nájem uvedený v inzerátu, jinak odhad z plochy bytů uvedené v inzerátu, a když chybí, z 60 % celkové plochy. Činžáky bez výslovně uvedeného počtu bytů mají štítek „k prověření“. Skryté jsou podezřelé nabídky s hrubým výnosem nad 15 % nebo bytem přes dvojnásobek obvyklé plochy dispozice (obvykle chyba v inzerátu, nebytový prostor nebo dům k demolici), zobrazíš je zaškrtnutím „i podezřelé“. Obce od ${fmt.format(m.min_obyvatel)} obyvatel (${m.obci} obcí, ČSÚ). Doba inzerce je u Srealit přesná, u Bezrealitek a iDNES (označeno „≥“) se počítá od chvíle, kdy jsme nabídku poprvé viděli (od 10. 10. 2026). Zdroje: Sreality, Bezrealitky, iDNES Reality.`;
   const kraje = [...new Set(DATA.map((x) => x.kraj).filter(Boolean))].sort((a, b) => a.localeCompare(b, "cs"));
   $("#f-kraj").insertAdjacentHTML("beforeend", kraje.map((k) => `<option>${esc(k)}</option>`).join(""));
   const order = ["1+kk", "1+1", "2+kk", "2+1", "3+kk", "3+1", "4+kk", "4+1", "5+kk", "5+1", "6 a více", "Atypický", "Pokoj"];
@@ -339,12 +351,12 @@ function summary() {
 
 function bind() {
   document.querySelectorAll("#f-typ button").forEach((b) => b.addEventListener("click", () => { state.typ = b.dataset.v; save(); render(); }));
-  ["f-cf", "f-cena", "f-q", "f-kraj", "f-disp", "f-new", "f-drop", "f-sus"].forEach((id) => $("#" + id).addEventListener("input", () => { save(); render(); }));
+  ["f-cf", "f-cena", "f-q", "f-kraj", "f-disp", "f-new", "f-drop", "f-sus", "f-chk"].forEach((id) => $("#" + id).addEventListener("input", () => { save(); render(); }));
   document.querySelectorAll("#f-jist input").forEach((i) => i.addEventListener("change", render));
   document.querySelectorAll("th.sort").forEach((th) => th.addEventListener("click", () => {
     const k = th.dataset.k;
     if (state.sortK === k) state.sortDir = state.sortDir === "asc" ? "desc" : "asc";
-    else { state.sortK = k; state.sortDir = ["obec", "cena", "cena_m2", "splatka"].includes(k) ? "asc" : "desc"; }
+    else { state.sortK = k; state.sortDir = ["obec", "cena", "cena_m2", "splatka", "inzerovano_od"].includes(k) ? "asc" : "desc"; }
     save(); render();
   }));
   $("#f-sort").addEventListener("change", (e) => { [state.sortK, state.sortDir] = e.target.value.split(":"); save(); render(); });
@@ -357,7 +369,7 @@ function bind() {
   });
   $("#reset").addEventListener("click", () => {
     state.typ = ""; $("#f-cf").value = META.cashflow_min ?? -5000; $("#f-cena").value = META.cena_max ?? 30000000;
-    $("#f-q").value = ""; $("#f-kraj").value = ""; $("#f-disp").value = ""; $("#f-new").checked = false; $("#f-drop").checked = false; $("#f-sus").checked = false;
+    $("#f-q").value = ""; $("#f-kraj").value = ""; $("#f-disp").value = ""; $("#f-new").checked = false; $("#f-drop").checked = false; $("#f-sus").checked = false; $("#f-chk").checked = false;
     document.querySelectorAll("#f-jist input").forEach((i) => (i.checked = true));
     save(); render();
   });
