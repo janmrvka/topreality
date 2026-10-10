@@ -1,0 +1,69 @@
+name: Cashflow nemovitostí
+
+on:
+  schedule:
+    # Plný běh: všechny portály + pronájmy (~30–70 min). 02:17 UTC = 4:17 v létě, 3:17 v zimě.
+    - cron: "17 2 * * *"
+    # Rychlý běh: prodeje ze Srealit a Bezrealitek (~5 min). 7, 10, 13, 16, 19, 22 h v létě (v zimě o hodinu dřív).
+    - cron: "17 5,8,11,14,17,20 * * *"
+  workflow_dispatch:
+    inputs:
+      plny:
+        description: "Plný běh (vč. pronájmů a iDNES)"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: reality
+  cancel-in-progress: false
+
+jobs:
+  beh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      # Databáze (historie cen, nájmy, detaily) a výpis z iDNES přežívají mezi běhy jako assety releasu "stav".
+      - name: Obnov stav z releasu
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release download stav --dir data || echo "Zatím žádný stav, startuji načisto."
+
+      - name: Spusť běh
+        env:
+          PLNY: ${{ (github.event.schedule == '17 2 * * *' || inputs.plny) && '--plny' || '' }}
+        run: python run.py $PLNY
+
+      - name: Ulož stav do releasu
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release view stav >/dev/null 2>&1 || gh release create stav --title "Stav" --notes "Databáze běhů. NEMAZAT."
+          for f in data/reality.db data/idnes_cache.json; do
+            [ -f "$f" ] && gh release upload stav "$f" --clobber
+          done
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dashboard
+
+  nasazeni:
+    needs: beh
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - id: deploy
+        uses: actions/deploy-pages@v4

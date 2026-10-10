@@ -1,0 +1,8 @@
+.venv/
+__pycache__/
+data/reality.db
+data/reality.db-journal
+data/idnes_cache.json
+data/beh.log
+data/obce.xlsx
+dashboard/data.json

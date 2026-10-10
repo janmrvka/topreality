@@ -1,0 +1,38 @@
+12:22:50 Sreality: prodej bytů…
+12:24:35 Sreality: prodej činžovních domů…
+12:24:50   19958 bytů, 540 činžáků, z toho v obcích 5000+: 17100
+12:24:50 Bezrealitky: prodej bytů…
+12:25:24   v obcích 5000+: 875
+  iDNES: přeskakuji stránku, https://reality.idnes.cz/s/prodej/byty/praha/?page=15: [Errno 54] Connection reset by peer
+  iDNES: přeskakuji stránku, https://reality.idnes.cz/s/prodej/byty/praha/?page=47: [Errno 54] Connection reset by peer
+  iDNES: přeskakuji stránku, https://reality.idnes.cz/s/prodej/byty/stredocesky-kraj/?page=58: [Errno 54] Connection reset by peer
+  iDNES: přeskakuji stránku, https://reality.idnes.cz/s/prodej/byty/praha/?page=57: [Errno 54] Connection reset by peer
+  iDNES: přeskakuji stránku, https://reality.idnes.cz/s/prodej/byty/jihocesky-kraj/?page=34: [Errno 54] Connection reset by peer
+  iDNES: přeskakuji stránku, https://reality.idnes.cz/s/prodej/byty/praha/?page=132: [Errno 54] Connection reset by peer
+  iDNES: přeskakuji stránku, https://reality.idnes.cz/s/prodej/byty/plzensky-kraj/?page=11: [Errno 54] Connection reset by peer
+  iDNES: přeskakuji stránku, https://reality.idnes.cz/s/prodej/byty/plzensky-kraj/?page=23: [Errno 54] Connection reset by peer
+  iDNES: přeskakuji stránku, https://reality.idnes.cz/s/prodej/byty/ustecky-kraj/?page=19: [Errno 54] Connection reset by peer
+  iDNES: přeskakuji stránku, https://reality.idnes.cz/s/prodej/byty/ustecky-kraj/?page=36: [Errno 54] Connection reset by peer
+  iDNES: přeskakuji stránku, https://reality.idnes.cz/s/prodej/byty/liberecky-kraj/?page=23: [Errno 54] Connection reset by peer
+  iDNES: přeskakuji stránku, https://reality.idnes.cz/s/prodej/byty/ustecky-kraj/?page=47: [Errno 54] Connection reset by peer
+  iDNES: přeskakuji stránku, https://reality.idnes.cz/s/prodej/byty/kralovehradecky-kraj/?page=1: [Errno 54] Connection reset by peer
+  iDNES: přeskakuji stránku, https://reality.idnes.cz/s/prodej/byty/kralovehradecky-kraj/?page=4: [Errno 54] Connection reset by peer
+  iDNES: přeskakuji stránku, https://reality.idnes.cz/s/prodej/byty/kralovehradecky-kraj/?page=27: [Errno 54] Connection reset by peer
+  iDNES: přeskakuji stránku, https://reality.idnes.cz/s/prodej/byty/kraj-vysocina/?page=19: [Errno 54] Connection reset by peer
+  iDNES: přeskakuji stránku, https://reality.idnes.cz/s/prodej/byty/jihomoravsky-kraj/?page=16: [Errno 54] Connection reset by peer
+  iDNES: přeskakuji stránku, https://reality.idnes.cz/s/prodej/byty/olomoucky-kraj/?page=13: [Errno 54] Connection reset by peer
+  iDNES: přeskakuji stránku, https://reality.idnes.cz/s/prodej/byty/olomoucky-kraj/?page=16: [Errno 54] Connection reset by peer
+  iDNES: přeskakuji stránku, https://reality.idnes.cz/s/prodej/byty/jihomoravsky-kraj/?page=26: [Errno 54] Connection reset by peer
+  iDNES: přeskakuji stránku, https://reality.idnes.cz/s/prodej/byty/jihomoravsky-kraj/?page=32: [Errno 54] Connection reset by peer
+  iDNES: přeskakuji stránku, https://reality.idnes.cz/s/prodej/byty/jihomoravsky-kraj/?page=36: [Errno 54] Connection reset by peer
+  iDNES: přeskakuji stránku, https://reality.idnes.cz/s/prodej/byty/jihomoravsky-kraj/?page=46: [Errno 54] Connection reset by peer
+  iDNES: přeskakuji stránku, https://reality.idnes.cz/s/prodej/byty/jihomoravsky-kraj/?page=53: [Errno 54] Connection reset by peer
+  iDNES: přeskakuji stránku, https://reality.idnes.cz/s/prodej/byty/moravskoslezsky-kraj/?page=53: [Errno 54] Connection reset by peer
+  iDNES: přeskakuji stránku, https://reality.idnes.cz/s/prodej/komercni-nemovitosti/najemni-domy/praha/: [Errno 54] Connection reset by peer
+  iDNES: přeskakuji stránku, https://reality.idnes.cz/s/prodej/komercni-nemovitosti/najemni-domy/ustecky-kraj/?page=2: [Errno 54] Connection reset by peer
+  iDNES: přeskakuji stránku, https://reality.idnes.cz/s/prodej/komercni-nemovitosti/najemni-domy/pardubicky-kraj/?page=1: [Errno 54] Connection reset by peer
+13:34:10 iDNES: prodej/byty (z mezipaměti)…
+13:34:10   v obcích 5000+: 12828
+13:34:10 iDNES: prodej/komercni-nemovitosti/najemni-domy (z mezipaměti)…
+13:34:10   v obcích 5000+: 288
+13:34:55 Hotovo: 3336 nabídek s cashflow ≥ -5000 Kč, 4325 s

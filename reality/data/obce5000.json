@@ -1,0 +1,1664 @@
+[
+{
+"kod": 554782,
+"obec": "Praha",
+"okres": "Praha",
+"obyvatel": 1397880
+},
+{
+"kod": 529303,
+"obec": "Benešov",
+"okres": "Benešov",
+"obyvatel": 17043
+},
+{
+"kod": 530841,
+"obec": "Týnec nad Sázavou",
+"okres": "Benešov",
+"obyvatel": 5752
+},
+{
+"kod": 530883,
+"obec": "Vlašim",
+"okres": "Benešov",
+"obyvatel": 11434
+},
+{
+"kod": 531057,
+"obec": "Beroun",
+"okres": "Beroun",
+"obyvatel": 21521
+},
+{
+"kod": 531189,
+"obec": "Hořovice",
+"okres": "Beroun",
+"obyvatel": 8055
+},
+{
+"kod": 533203,
+"obec": "Králův Dvůr",
+"okres": "Beroun",
+"obyvatel": 10598
+},
+{
+"kod": 532053,
+"obec": "Kladno",
+"okres": "Kladno",
+"obyvatel": 69664
+},
+{
+"kod": 532819,
+"obec": "Slaný",
+"okres": "Kladno",
+"obyvatel": 16937
+},
+{
+"kod": 532860,
+"obec": "Stochov",
+"okres": "Kladno",
+"obyvatel": 5349
+},
+{
+"kod": 533017,
+"obec": "Unhošť",
+"okres": "Kladno",
+"obyvatel": 5292
+},
+{
+"kod": 533271,
+"obec": "Český Brod",
+"okres": "Kolín",
+"obyvatel": 7487
+},
+{
+"kod": 533165,
+"obec": "Kolín",
+"okres": "Kolín",
+"obyvatel": 33444
+},
+{
+"kod": 534005,
+"obec": "Čáslav",
+"okres": "Kutná Hora",
+"obyvatel": 10399
+},
+{
+"kod": 533955,
+"obec": "Kutná Hora",
+"okres": "Kutná Hora",
+"obyvatel": 21642
+},
+{
+"kod": 534951,
+"obec": "Kralupy nad Vltavou",
+"okres": "Mělník",
+"obyvatel": 19005
+},
+{
+"kod": 534676,
+"obec": "Mělník",
+"okres": "Mělník",
+"obyvatel": 20278
+},
+{
+"kod": 535087,
+"obec": "Neratovice",
+"okres": "Mělník",
+"obyvatel": 16360
+},
+{
+"kod": 535427,
+"obec": "Bakov nad Jizerou",
+"okres": "Mladá Boleslav",
+"obyvatel": 5355
+},
+{
+"kod": 535451,
+"obec": "Benátky nad Jizerou",
+"okres": "Mladá Boleslav",
+"obyvatel": 7879
+},
+{
+"kod": 570826,
+"obec": "Kosmonosy",
+"okres": "Mladá Boleslav",
+"obyvatel": 5247
+},
+{
+"kod": 535419,
+"obec": "Mladá Boleslav",
+"okres": "Mladá Boleslav",
+"obyvatel": 47346
+},
+{
+"kod": 536326,
+"obec": "Mnichovo Hradiště",
+"okres": "Mladá Boleslav",
+"obyvatel": 9048
+},
+{
+"kod": 537454,
+"obec": "Lysá nad Labem",
+"okres": "Nymburk",
+"obyvatel": 10004
+},
+{
+"kod": 537501,
+"obec": "Milovice",
+"okres": "Nymburk",
+"obyvatel": 14270
+},
+{
+"kod": 537004,
+"obec": "Nymburk",
+"okres": "Nymburk",
+"obyvatel": 15642
+},
+{
+"kod": 537683,
+"obec": "Poděbrady",
+"okres": "Nymburk",
+"obyvatel": 15232
+},
+{
+"kod": 538094,
+"obec": "Brandýs nad Labem-Stará Boleslav",
+"okres": "Praha-východ",
+"obyvatel": 20313
+},
+{
+"kod": 538132,
+"obec": "Čelákovice",
+"okres": "Praha-východ",
+"obyvatel": 12474
+},
+{
+"kod": 538299,
+"obec": "Kamenice",
+"okres": "Praha-východ",
+"obyvatel": 5187
+},
+{
+"kod": 538574,
+"obec": "Odolena Voda",
+"okres": "Praha-východ",
+"obyvatel": 6547
+},
+{
+"kod": 538728,
+"obec": "Říčany",
+"okres": "Praha-východ",
+"obyvatel": 17143
+},
+{
+"kod": 538957,
+"obec": "Úvaly",
+"okres": "Praha-východ",
+"obyvatel": 7515
+},
+{
+"kod": 539139,
+"obec": "Černošice",
+"okres": "Praha-západ",
+"obyvatel": 7712
+},
+{
+"kod": 539236,
+"obec": "Horoměřice",
+"okres": "Praha-západ",
+"obyvatel": 5496
+},
+{
+"kod": 539244,
+"obec": "Hostivice",
+"okres": "Praha-západ",
+"obyvatel": 9179
+},
+{
+"kod": 539325,
+"obec": "Jesenice",
+"okres": "Praha-západ",
+"obyvatel": 10460
+},
+{
+"kod": 539333,
+"obec": "Jílové u Prahy",
+"okres": "Praha-západ",
+"obyvatel": 5262
+},
+{
+"kod": 540765,
+"obec": "Mníšek pod Brdy",
+"okres": "Praha-západ",
+"obyvatel": 6432
+},
+{
+"kod": 539627,
+"obec": "Roztoky",
+"okres": "Praha-západ",
+"obyvatel": 9088
+},
+{
+"kod": 531723,
+"obec": "Rudná",
+"okres": "Praha-západ",
+"obyvatel": 5502
+},
+{
+"kod": 540111,
+"obec": "Dobříš",
+"okres": "Příbram",
+"obyvatel": 8870
+},
+{
+"kod": 539911,
+"obec": "Příbram",
+"okres": "Příbram",
+"obyvatel": 32773
+},
+{
+"kod": 541281,
+"obec": "Sedlčany",
+"okres": "Příbram",
+"obyvatel": 6767
+},
+{
+"kod": 542164,
+"obec": "Nové Strašecí",
+"okres": "Rakovník",
+"obyvatel": 5686
+},
+{
+"kod": 541656,
+"obec": "Rakovník",
+"okres": "Rakovník",
+"obyvatel": 15682
+},
+{
+"kod": 544256,
+"obec": "České Budějovice",
+"okres": "České Budějovice",
+"obyvatel": 97231
+},
+{
+"kod": 544485,
+"obec": "Hluboká nad Vltavou",
+"okres": "České Budějovice",
+"obyvatel": 5626
+},
+{
+"kod": 545171,
+"obec": "Trhové Sviny",
+"okres": "České Budějovice",
+"obyvatel": 5262
+},
+{
+"kod": 545201,
+"obec": "Týn nad Vltavou",
+"okres": "České Budějovice",
+"obyvatel": 7774
+},
+{
+"kod": 545392,
+"obec": "Český Krumlov",
+"okres": "Český Krumlov",
+"obyvatel": 12797
+},
+{
+"kod": 545562,
+"obec": "Kaplice",
+"okres": "Český Krumlov",
+"obyvatel": 7531
+},
+{
+"kod": 546127,
+"obec": "Dačice",
+"okres": "Jindřichův Hradec",
+"obyvatel": 7157
+},
+{
+"kod": 545881,
+"obec": "Jindřichův Hradec",
+"okres": "Jindřichův Hradec",
+"obyvatel": 20540
+},
+{
+"kod": 547336,
+"obec": "Třeboň",
+"okres": "Jindřichův Hradec",
+"obyvatel": 8270
+},
+{
+"kod": 549576,
+"obec": "Milevsko",
+"okres": "Písek",
+"obyvatel": 7950
+},
+{
+"kod": 549240,
+"obec": "Písek",
+"okres": "Písek",
+"obyvatel": 31121
+},
+{
+"kod": 550094,
+"obec": "Prachatice",
+"okres": "Prachatice",
+"obyvatel": 11119
+},
+{
+"kod": 550647,
+"obec": "Vimperk",
+"okres": "Prachatice",
+"obyvatel": 7289
+},
+{
+"kod": 550850,
+"obec": "Blatná",
+"okres": "Strakonice",
+"obyvatel": 6669
+},
+{
+"kod": 550787,
+"obec": "Strakonice",
+"okres": "Strakonice",
+"obyvatel": 22355
+},
+{
+"kod": 551953,
+"obec": "Vodňany",
+"okres": "Strakonice",
+"obyvatel": 7383
+},
+{
+"kod": 553069,
+"obec": "Sezimovo Ústí",
+"okres": "Tábor",
+"obyvatel": 7097
+},
+{
+"kod": 553131,
+"obec": "Soběslav",
+"okres": "Tábor",
+"obyvatel": 7070
+},
+{
+"kod": 552046,
+"obec": "Tábor",
+"okres": "Tábor",
+"obyvatel": 34356
+},
+{
+"kod": 553271,
+"obec": "Veselí nad Lužnicí",
+"okres": "Tábor",
+"obyvatel": 6515
+},
+{
+"kod": 553425,
+"obec": "Domažlice",
+"okres": "Domažlice",
+"obyvatel": 11133
+},
+{
+"kod": 553671,
+"obec": "Horšovský Týn",
+"okres": "Domažlice",
+"obyvatel": 5046
+},
+{
+"kod": 553786,
+"obec": "Kdyně",
+"okres": "Domažlice",
+"obyvatel": 5153
+},
+{
+"kod": 556254,
+"obec": "Horažďovice",
+"okres": "Klatovy",
+"obyvatel": 5103
+},
+{
+"kod": 555771,
+"obec": "Klatovy",
+"okres": "Klatovy",
+"obyvatel": 22763
+},
+{
+"kod": 556831,
+"obec": "Nýrsko",
+"okres": "Klatovy",
+"obyvatel": 5011
+},
+{
+"kod": 557153,
+"obec": "Sušice",
+"okres": "Klatovy",
+"obyvatel": 10740
+},
+{
+"kod": 554791,
+"obec": "Plzeň",
+"okres": "Plzeň-město",
+"obyvatel": 187928
+},
+{
+"kod": 558371,
+"obec": "Starý Plzenec",
+"okres": "Plzeň-město",
+"obyvatel": 5403
+},
+{
+"kod": 557676,
+"obec": "Dobřany",
+"okres": "Plzeň-jih",
+"obyvatel": 6504
+},
+{
+"kod": 553654,
+"obec": "Holýšov",
+"okres": "Plzeň-jih",
+"obyvatel": 5647
+},
+{
+"kod": 558249,
+"obec": "Přeštice",
+"okres": "Plzeň-jih",
+"obyvatel": 6792
+},
+{
+"kod": 559300,
+"obec": "Nýřany",
+"okres": "Plzeň-sever",
+"obyvatel": 6991
+},
+{
+"kod": 559521,
+"obec": "Třemošná",
+"okres": "Plzeň-sever",
+"obyvatel": 5052
+},
+{
+"kod": 559717,
+"obec": "Rokycany",
+"okres": "Rokycany",
+"obyvatel": 14381
+},
+{
+"kod": 561134,
+"obec": "Planá",
+"okres": "Tachov",
+"obyvatel": 5493
+},
+{
+"kod": 561215,
+"obec": "Stříbro",
+"okres": "Tachov",
+"obyvatel": 8060
+},
+{
+"kod": 560715,
+"obec": "Tachov",
+"okres": "Tachov",
+"obyvatel": 14097
+},
+{
+"kod": 554499,
+"obec": "Aš",
+"okres": "Cheb",
+"obyvatel": 12684
+},
+{
+"kod": 554529,
+"obec": "Františkovy Lázně",
+"okres": "Cheb",
+"obyvatel": 5607
+},
+{
+"kod": 554481,
+"obec": "Cheb",
+"okres": "Cheb",
+"obyvatel": 32808
+},
+{
+"kod": 554642,
+"obec": "Mariánské Lázně",
+"okres": "Cheb",
+"obyvatel": 14052
+},
+{
+"kod": 554961,
+"obec": "Karlovy Vary",
+"okres": "Karlovy Vary",
+"obyvatel": 49073
+},
+{
+"kod": 555380,
+"obec": "Nejdek",
+"okres": "Karlovy Vary",
+"obyvatel": 7733
+},
+{
+"kod": 555428,
+"obec": "Ostrov",
+"okres": "Karlovy Vary",
+"obyvatel": 15681
+},
+{
+"kod": 560367,
+"obec": "Horní Slavkov",
+"okres": "Sokolov",
+"obyvatel": 5309
+},
+{
+"kod": 560383,
+"obec": "Chodov",
+"okres": "Sokolov",
+"obyvatel": 12609
+},
+{
+"kod": 560472,
+"obec": "Kraslice",
+"okres": "Sokolov",
+"obyvatel": 6432
+},
+{
+"kod": 560286,
+"obec": "Sokolov",
+"okres": "Sokolov",
+"obyvatel": 22007
+},
+{
+"kod": 562394,
+"obec": "Česká Kamenice",
+"okres": "Děčín",
+"obyvatel": 5037
+},
+{
+"kod": 562335,
+"obec": "Děčín",
+"okres": "Děčín",
+"obyvatel": 46376
+},
+{
+"kod": 562777,
+"obec": "Rumburk",
+"okres": "Děčín",
+"obyvatel": 10815
+},
+{
+"kod": 562858,
+"obec": "Šluknov",
+"okres": "Děčín",
+"obyvatel": 5629
+},
+{
+"kod": 562882,
+"obec": "Varnsdorf",
+"okres": "Děčín",
+"obyvatel": 14704
+},
+{
+"kod": 562971,
+"obec": "Chomutov",
+"okres": "Chomutov",
+"obyvatel": 46771
+},
+{
+"kod": 563099,
+"obec": "Jirkov",
+"okres": "Chomutov",
+"obyvatel": 19240
+},
+{
+"kod": 563102,
+"obec": "Kadaň",
+"okres": "Chomutov",
+"obyvatel": 18090
+},
+{
+"kod": 563129,
+"obec": "Klášterec nad Ohří",
+"okres": "Chomutov",
+"obyvatel": 14068
+},
+{
+"kod": 564567,
+"obec": "Litoměřice",
+"okres": "Litoměřice",
+"obyvatel": 22767
+},
+{
+"kod": 565229,
+"obec": "Lovosice",
+"okres": "Litoměřice",
+"obyvatel": 8727
+},
+{
+"kod": 565555,
+"obec": "Roudnice nad Labem",
+"okres": "Litoměřice",
+"obyvatel": 12668
+},
+{
+"kod": 565709,
+"obec": "Štětí",
+"okres": "Litoměřice",
+"obyvatel": 8553
+},
+{
+"kod": 565971,
+"obec": "Louny",
+"okres": "Louny",
+"obyvatel": 18068
+},
+{
+"kod": 566616,
+"obec": "Podbořany",
+"okres": "Louny",
+"obyvatel": 6253
+},
+{
+"kod": 566985,
+"obec": "Žatec",
+"okres": "Louny",
+"obyvatel": 18959
+},
+{
+"kod": 567256,
+"obec": "Litvínov",
+"okres": "Most",
+"obyvatel": 22387
+},
+{
+"kod": 567027,
+"obec": "Most",
+"okres": "Most",
+"obyvatel": 63474
+},
+{
+"kod": 567451,
+"obec": "Bílina",
+"okres": "Teplice",
+"obyvatel": 14497
+},
+{
+"kod": 567507,
+"obec": "Dubí",
+"okres": "Teplice",
+"obyvatel": 8114
+},
+{
+"kod": 567515,
+"obec": "Duchcov",
+"okres": "Teplice",
+"obyvatel": 8695
+},
+{
+"kod": 567639,
+"obec": "Krupka",
+"okres": "Teplice",
+"obyvatel": 12793
+},
+{
+"kod": 567442,
+"obec": "Teplice",
+"okres": "Teplice",
+"obyvatel": 50912
+},
+{
+"kod": 554804,
+"obec": "Ústí nad Labem",
+"okres": "Ústí nad Labem",
+"obyvatel": 90866
+},
+{
+"kod": 561380,
+"obec": "Česká Lípa",
+"okres": "Česká Lípa",
+"obyvatel": 36815
+},
+{
+"kod": 561495,
+"obec": "Doksy",
+"okres": "Česká Lípa",
+"obyvatel": 5115
+},
+{
+"kod": 561835,
+"obec": "Mimoň",
+"okres": "Česká Lípa",
+"obyvatel": 6387
+},
+{
+"kod": 561860,
+"obec": "Nový Bor",
+"okres": "Česká Lípa",
+"obyvatel": 11318
+},
+{
+"kod": 563510,
+"obec": "Jablonec nad Nisou",
+"okres": "Jablonec nad Nisou",
+"obyvatel": 46209
+},
+{
+"kod": 563820,
+"obec": "Tanvald",
+"okres": "Jablonec nad Nisou",
+"obyvatel": 5970
+},
+{
+"kod": 563871,
+"obec": "Železný Brod",
+"okres": "Jablonec nad Nisou",
+"obyvatel": 6043
+},
+{
+"kod": 564028,
+"obec": "Frýdlant",
+"okres": "Liberec",
+"obyvatel": 7379
+},
+{
+"kod": 564095,
+"obec": "Hrádek nad Nisou",
+"okres": "Liberec",
+"obyvatel": 8001
+},
+{
+"kod": 564117,
+"obec": "Chrastava",
+"okres": "Liberec",
+"obyvatel": 6315
+},
+{
+"kod": 563889,
+"obec": "Liberec",
+"okres": "Liberec",
+"obyvatel": 108090
+},
+{
+"kod": 577197,
+"obec": "Jilemnice",
+"okres": "Semily",
+"obyvatel": 5377
+},
+{
+"kod": 577308,
+"obec": "Lomnice nad Popelkou",
+"okres": "Semily",
+"obyvatel": 5626
+},
+{
+"kod": 576964,
+"obec": "Semily",
+"okres": "Semily",
+"obyvatel": 8022
+},
+{
+"kod": 577626,
+"obec": "Turnov",
+"okres": "Semily",
+"obyvatel": 14577
+},
+{
+"kod": 569810,
+"obec": "Hradec Králové",
+"okres": "Hradec Králové",
+"obyvatel": 94311
+},
+{
+"kod": 570109,
+"obec": "Chlumec nad Cidlinou",
+"okres": "Hradec Králové",
+"obyvatel": 5609
+},
+{
+"kod": 570508,
+"obec": "Nový Bydžov",
+"okres": "Hradec Králové",
+"obyvatel": 7224
+},
+{
+"kod": 571041,
+"obec": "Třebechovice pod Orebem",
+"okres": "Hradec Králové",
+"obyvatel": 5869
+},
+{
+"kod": 572926,
+"obec": "Hořice",
+"okres": "Jičín",
+"obyvatel": 8476
+},
+{
+"kod": 572659,
+"obec": "Jičín",
+"okres": "Jičín",
+"obyvatel": 16101
+},
+{
+"kod": 573248,
+"obec": "Nová Paka",
+"okres": "Jičín",
+"obyvatel": 8979
+},
+{
+"kod": 573922,
+"obec": "Broumov",
+"okres": "Náchod",
+"obyvatel": 7108
+},
+{
+"kod": 573965,
+"obec": "Červený Kostelec",
+"okres": "Náchod",
+"obyvatel": 8262
+},
+{
+"kod": 573990,
+"obec": "Česká Skalice",
+"okres": "Náchod",
+"obyvatel": 5020
+},
+{
+"kod": 574082,
+"obec": "Hronov",
+"okres": "Náchod",
+"obyvatel": 6094
+},
+{
+"kod": 574121,
+"obec": "Jaroměř",
+"okres": "Náchod",
+"obyvatel": 12483
+},
+{
+"kod": 573868,
+"obec": "Náchod",
+"okres": "Náchod",
+"obyvatel": 19827
+},
+{
+"kod": 574279,
+"obec": "Nové Město nad Metují",
+"okres": "Náchod",
+"obyvatel": 9181
+},
+{
+"kod": 576271,
+"obec": "Dobruška",
+"okres": "Rychnov nad Kněžnou",
+"obyvatel": 6532
+},
+{
+"kod": 576361,
+"obec": "Kostelec nad Orlicí",
+"okres": "Rychnov nad Kněžnou",
+"obyvatel": 6252
+},
+{
+"kod": 576069,
+"obec": "Rychnov nad Kněžnou",
+"okres": "Rychnov nad Kněžnou",
+"obyvatel": 11420
+},
+{
+"kod": 576859,
+"obec": "Týniště nad Orlicí",
+"okres": "Rychnov nad Kněžnou",
+"obyvatel": 6148
+},
+{
+"kod": 579203,
+"obec": "Dvůr Králové nad Labem",
+"okres": "Trutnov",
+"obyvatel": 15322
+},
+{
+"kod": 579025,
+"obec": "Trutnov",
+"okres": "Trutnov",
+"obyvatel": 29607
+},
+{
+"kod": 579777,
+"obec": "Úpice",
+"okres": "Trutnov",
+"obyvatel": 5448
+},
+{
+"kod": 579858,
+"obec": "Vrchlabí",
+"okres": "Trutnov",
+"obyvatel": 12102
+},
+{
+"kod": 571393,
+"obec": "Hlinsko",
+"okres": "Chrudim",
+"obyvatel": 9563
+},
+{
+"kod": 571164,
+"obec": "Chrudim",
+"okres": "Chrudim",
+"obyvatel": 23564
+},
+{
+"kod": 572241,
+"obec": "Skuteč",
+"okres": "Chrudim",
+"obyvatel": 5020
+},
+{
+"kod": 574988,
+"obec": "Holice",
+"okres": "Pardubice",
+"obyvatel": 6761
+},
+{
+"kod": 555134,
+"obec": "Pardubice",
+"okres": "Pardubice",
+"obyvatel": 92319
+},
+{
+"kod": 575500,
+"obec": "Přelouč",
+"okres": "Pardubice",
+"obyvatel": 10203
+},
+{
+"kod": 578347,
+"obec": "Litomyšl",
+"okres": "Svitavy",
+"obyvatel": 10448
+},
+{
+"kod": 578444,
+"obec": "Moravská Třebová",
+"okres": "Svitavy",
+"obyvatel": 9550
+},
+{
+"kod": 578576,
+"obec": "Polička",
+"okres": "Svitavy",
+"obyvatel": 9051
+},
+{
+"kod": 577731,
+"obec": "Svitavy",
+"okres": "Svitavy",
+"obyvatel": 16073
+},
+{
+"kod": 580031,
+"obec": "Česká Třebová",
+"okres": "Ústí nad Orlicí",
+"obyvatel": 15010
+},
+{
+"kod": 580350,
+"obec": "Choceň",
+"okres": "Ústí nad Orlicí",
+"obyvatel": 8641
+},
+{
+"kod": 580511,
+"obec": "Lanškroun",
+"okres": "Ústí nad Orlicí",
+"obyvatel": 9776
+},
+{
+"kod": 580538,
+"obec": "Letohrad",
+"okres": "Ústí nad Orlicí",
+"obyvatel": 6407
+},
+{
+"kod": 579891,
+"obec": "Ústí nad Orlicí",
+"okres": "Ústí nad Orlicí",
+"obyvatel": 14011
+},
+{
+"kod": 581186,
+"obec": "Vysoké Mýto",
+"okres": "Ústí nad Orlicí",
+"obyvatel": 12560
+},
+{
+"kod": 581259,
+"obec": "Žamberk",
+"okres": "Ústí nad Orlicí",
+"obyvatel": 5819
+},
+{
+"kod": 568414,
+"obec": "Havlíčkův Brod",
+"okres": "Havlíčkův Brod",
+"obyvatel": 23791
+},
+{
+"kod": 568759,
+"obec": "Chotěboř",
+"okres": "Havlíčkův Brod",
+"obyvatel": 9092
+},
+{
+"kod": 569569,
+"obec": "Světlá nad Sázavou",
+"okres": "Havlíčkův Brod",
+"obyvatel": 6394
+},
+{
+"kod": 586846,
+"obec": "Jihlava",
+"okres": "Jihlava",
+"obyvatel": 54624
+},
+{
+"kod": 587711,
+"obec": "Polná",
+"okres": "Jihlava",
+"obyvatel": 5277
+},
+{
+"kod": 588024,
+"obec": "Telč",
+"okres": "Jihlava",
+"obyvatel": 5134
+},
+{
+"kod": 588032,
+"obec": "Třešť",
+"okres": "Jihlava",
+"obyvatel": 5790
+},
+{
+"kod": 547999,
+"obec": "Humpolec",
+"okres": "Pelhřimov",
+"obyvatel": 11522
+},
+{
+"kod": 547492,
+"obec": "Pelhřimov",
+"okres": "Pelhřimov",
+"obyvatel": 16206
+},
+{
+"kod": 591181,
+"obec": "Moravské Budějovice",
+"okres": "Třebíč",
+"obyvatel": 7098
+},
+{
+"kod": 590266,
+"obec": "Třebíč",
+"okres": "Třebíč",
+"obyvatel": 34530
+},
+{
+"kod": 595411,
+"obec": "Bystřice nad Pernštejnem",
+"okres": "Žďár nad Sázavou",
+"obyvatel": 7871
+},
+{
+"kod": 596230,
+"obec": "Nové Město na Moravě",
+"okres": "Žďár nad Sázavou",
+"obyvatel": 9834
+},
+{
+"kod": 596973,
+"obec": "Velká Bíteš",
+"okres": "Žďár nad Sázavou",
+"obyvatel": 5482
+},
+{
+"kod": 597007,
+"obec": "Velké Meziříčí",
+"okres": "Žďár nad Sázavou",
+"obyvatel": 11608
+},
+{
+"kod": 595209,
+"obec": "Žďár nad Sázavou",
+"okres": "Žďár nad Sázavou",
+"obyvatel": 20404
+},
+{
+"kod": 581283,
+"obec": "Blansko",
+"okres": "Blansko",
+"obyvatel": 20002
+},
+{
+"kod": 581372,
+"obec": "Boskovice",
+"okres": "Blansko",
+"obyvatel": 12508
+},
+{
+"kod": 581917,
+"obec": "Letovice",
+"okres": "Blansko",
+"obyvatel": 7124
+},
+{
+"kod": 582786,
+"obec": "Brno",
+"okres": "Brno-město",
+"obyvatel": 402739
+},
+{
+"kod": 583120,
+"obec": "Ivančice",
+"okres": "Brno-venkov",
+"obyvatel": 9898
+},
+{
+"kod": 583251,
+"obec": "Kuřim",
+"okres": "Brno-venkov",
+"obyvatel": 11860
+},
+{
+"kod": 583391,
+"obec": "Modřice",
+"okres": "Brno-venkov",
+"obyvatel": 5755
+},
+{
+"kod": 584801,
+"obec": "Pohořelice",
+"okres": "Brno-venkov",
+"obyvatel": 6126
+},
+{
+"kod": 583782,
+"obec": "Rosice",
+"okres": "Brno-venkov",
+"obyvatel": 6784
+},
+{
+"kod": 583952,
+"obec": "Šlapanice",
+"okres": "Brno-venkov",
+"obyvatel": 7915
+},
+{
+"kod": 584002,
+"obec": "Tišnov",
+"okres": "Brno-venkov",
+"obyvatel": 9225
+},
+{
+"kod": 584291,
+"obec": "Břeclav",
+"okres": "Břeclav",
+"obyvatel": 24538
+},
+{
+"kod": 584495,
+"obec": "Hustopeče",
+"okres": "Břeclav",
+"obyvatel": 6388
+},
+{
+"kod": 584649,
+"obec": "Mikulov",
+"okres": "Břeclav",
+"obyvatel": 7577
+},
+{
+"kod": 586161,
+"obec": "Dubňany",
+"okres": "Hodonín",
+"obyvatel": 6202
+},
+{
+"kod": 586021,
+"obec": "Hodonín",
+"okres": "Hodonín",
+"obyvatel": 23517
+},
+{
+"kod": 586307,
+"obec": "Kyjov",
+"okres": "Hodonín",
+"obyvatel": 10645
+},
+{
+"kod": 586587,
+"obec": "Strážnice",
+"okres": "Hodonín",
+"obyvatel": 5311
+},
+{
+"kod": 586722,
+"obec": "Veselí nad Moravou",
+"okres": "Hodonín",
+"obyvatel": 10623
+},
+{
+"kod": 592943,
+"obec": "Bučovice",
+"okres": "Vyškov",
+"obyvatel": 6891
+},
+{
+"kod": 593559,
+"obec": "Rousínov",
+"okres": "Vyškov",
+"obyvatel": 5962
+},
+{
+"kod": 593583,
+"obec": "Slavkov u Brna",
+"okres": "Vyškov",
+"obyvatel": 7258
+},
+{
+"kod": 592889,
+"obec": "Vyškov",
+"okres": "Vyškov",
+"obyvatel": 20645
+},
+{
+"kod": 594482,
+"obec": "Moravský Krumlov",
+"okres": "Znojmo",
+"obyvatel": 5667
+},
+{
+"kod": 593711,
+"obec": "Znojmo",
+"okres": "Znojmo",
+"obyvatel": 34172
+},
+{
+"kod": 536385,
+"obec": "Jeseník",
+"okres": "Jeseník",
+"obyvatel": 10456
+},
+{
+"kod": 503444,
+"obec": "Litovel",
+"okres": "Olomouc",
+"obyvatel": 9510
+},
+{
+"kod": 500496,
+"obec": "Olomouc",
+"okres": "Olomouc",
+"obyvatel": 103063
+},
+{
+"kod": 505188,
+"obec": "Šternberk",
+"okres": "Olomouc",
+"obyvatel": 13239
+},
+{
+"kod": 505587,
+"obec": "Uničov",
+"okres": "Olomouc",
+"obyvatel": 11237
+},
+{
+"kod": 589250,
+"obec": "Prostějov",
+"okres": "Prostějov",
+"obyvatel": 43408
+},
+{
+"kod": 513750,
+"obec": "Hranice",
+"okres": "Přerov",
+"obyvatel": 17969
+},
+{
+"kod": 514055,
+"obec": "Kojetín",
+"okres": "Přerov",
+"obyvatel": 5748
+},
+{
+"kod": 514705,
+"obec": "Lipník nad Bečvou",
+"okres": "Přerov",
+"obyvatel": 7955
+},
+{
+"kod": 511382,
+"obec": "Přerov",
+"okres": "Přerov",
+"obyvatel": 40906
+},
+{
+"kod": 540471,
+"obec": "Mohelnice",
+"okres": "Šumperk",
+"obyvatel": 9782
+},
+{
+"kod": 523704,
+"obec": "Šumperk",
+"okres": "Šumperk",
+"obyvatel": 24735
+},
+{
+"kod": 541354,
+"obec": "Zábřeh",
+"okres": "Šumperk",
+"obyvatel": 13320
+},
+{
+"kod": 588393,
+"obec": "Bystřice pod Hostýnem",
+"okres": "Kroměříž",
+"obyvatel": 8002
+},
+{
+"kod": 588458,
+"obec": "Holešov",
+"okres": "Kroměříž",
+"obyvatel": 11616
+},
+{
+"kod": 588491,
+"obec": "Hulín",
+"okres": "Kroměříž",
+"obyvatel": 6414
+},
+{
+"kod": 588296,
+"obec": "Kroměříž",
+"okres": "Kroměříž",
+"obyvatel": 27917
+},
+{
+"kod": 550744,
+"obec": "Kunovice",
+"okres": "Uherské Hradiště",
+"obyvatel": 5570
+},
+{
+"kod": 550752,
+"obec": "Staré Město",
+"okres": "Uherské Hradiště",
+"obyvatel": 6585
+},
+{
+"kod": 592005,
+"obec": "Uherské Hradiště",
+"okres": "Uherské Hradiště",
+"obyvatel": 24887
+},
+{
+"kod": 592731,
+"obec": "Uherský Brod",
+"okres": "Uherské Hradiště",
+"obyvatel": 16367
+},
+{
+"kod": 544841,
+"obec": "Rožnov pod Radhoštěm",
+"okres": "Vsetín",
+"obyvatel": 16063
+},
+{
+"kod": 545058,
+"obec": "Valašské Meziříčí",
+"okres": "Vsetín",
+"obyvatel": 22580
+},
+{
+"kod": 541630,
+"obec": "Vsetín",
+"okres": "Vsetín",
+"obyvatel": 25185
+},
+{
+"kod": 545252,
+"obec": "Zubří",
+"okres": "Vsetín",
+"obyvatel": 5561
+},
+{
+"kod": 585114,
+"obec": "Brumov-Bylnice",
+"okres": "Zlín",
+"obyvatel": 5400
+},
+{
+"kod": 585459,
+"obec": "Luhačovice",
+"okres": "Zlín",
+"obyvatel": 5029
+},
+{
+"kod": 585513,
+"obec": "Napajedla",
+"okres": "Zlín",
+"obyvatel": 7043
+},
+{
+"kod": 585599,
+"obec": "Otrokovice",
+"okres": "Zlín",
+"obyvatel": 17401
+},
+{
+"kod": 585751,
+"obec": "Slavičín",
+"okres": "Zlín",
+"obyvatel": 6184
+},
+{
+"kod": 585068,
+"obec": "Zlín",
+"okres": "Zlín",
+"obyvatel": 74684
+},
+{
+"kod": 597180,
+"obec": "Bruntál",
+"okres": "Bruntál",
+"obyvatel": 15037
+},
+{
+"kod": 597520,
+"obec": "Krnov",
+"okres": "Bruntál",
+"obyvatel": 22518
+},
+{
+"kod": 597783,
+"obec": "Rýmařov",
+"okres": "Bruntál",
+"obyvatel": 7763
+},
+{
+"kod": 598062,
+"obec": "Bystřice",
+"okres": "Frýdek-Místek",
+"obyvatel": 5260
+},
+{
+"kod": 598003,
+"obec": "Frýdek-Místek",
+"okres": "Frýdek-Místek",
+"obyvatel": 53590
+},
+{
+"kod": 598143,
+"obec": "Frýdlant nad Ostravicí",
+"okres": "Frýdek-Místek",
+"obyvatel": 9835
+},
+{
+"kod": 598259,
+"obec": "Jablunkov",
+"okres": "Frýdek-Místek",
+"obyvatel": 5257
+},
+{
+"kod": 598810,
+"obec": "Třinec",
+"okres": "Frýdek-Místek",
+"obyvatel": 33852
+},
+{
+"kod": 599051,
+"obec": "Bohumín",
+"okres": "Karviná",
+"obyvatel": 20315
+},
+{
+"kod": 598933,
+"obec": "Český Těšín",
+"okres": "Karviná",
+"obyvatel": 23075
+},
+{
+"kod": 598968,
+"obec": "Dolní Lutyně",
+"okres": "Karviná",
+"obyvatel": 5326
+},
+{
+"kod": 555088,
+"obec": "Havířov",
+"okres": "Karviná",
+"obyvatel": 68674
+},
+{
+"kod": 598917,
+"obec": "Karviná",
+"okres": "Karviná",
+"obyvatel": 48937
+},
+{
+"kod": 599069,
+"obec": "Orlová",
+"okres": "Karviná",
+"obyvatel": 27540
+},
+{
+"kod": 599085,
+"obec": "Petřvald",
+"okres": "Karviná",
+"obyvatel": 7409
+},
+{
+"kod": 599107,
+"obec": "Rychvald",
+"okres": "Karviná",
+"obyvatel": 7787
+},
+{
+"kod": 599247,
+"obec": "Bílovec",
+"okres": "Nový Jičín",
+"obyvatel": 7411
+},
+{
+"kod": 599344,
+"obec": "Frenštát pod Radhoštěm",
+"okres": "Nový Jičín",
+"obyvatel": 10554
+},
+{
+"kod": 599352,
+"obec": "Fulnek",
+"okres": "Nový Jičín",
+"obyvatel": 5472
+},
+{
+"kod": 599565,
+"obec": "Kopřivnice",
+"okres": "Nový Jičín",
+"obyvatel": 21374
+},
+{
+"kod": 599191,
+"obec": "Nový Jičín",
+"okres": "Nový Jičín",
+"obyvatel": 23005
+},
+{
+"kod": 599701,
+"obec": "Odry",
+"okres": "Nový Jičín",
+"obyvatel": 7314
+},
+{
+"kod": 599808,
+"obec": "Příbor",
+"okres": "Nový Jičín",
+"obyvatel": 8298
+},
+{
+"kod": 599921,
+"obec": "Studénka",
+"okres": "Nový Jičín",
+"obyvatel": 9302
+},
+{
+"kod": 507016,
+"obec": "Hlučín",
+"okres": "Opava",
+"obyvatel": 13352
+},
+{
+"kod": 507270,
+"obec": "Hradec nad Moravicí",
+"okres": "Opava",
+"obyvatel": 5459
+},
+{
+"kod": 507580,
+"obec": "Kravaře",
+"okres": "Opava",
+"obyvatel": 6689
+},
+{
+"kod": 505927,
+"obec": "Opava",
+"okres": "Opava",
+"obyvatel": 55109
+},
+{
+"kod": 511021,
+"obec": "Vítkov",
+"okres": "Opava",
+"obyvatel": 5508
+},
+{
+"kod": 554821,
+"obec": "Ostrava",
+"okres": "Ostrava-město",
+"obyvatel": 283187
+},
+{
+"kod": 598798,
+"obec": "Šenov",
+"okres": "Ostrava-město",
+"obyvatel": 6639
+},
+{
+"kod": 598879,
+"obec": "Vratimov",
+"okres": "Ostrava-město",
+"obyvatel": 7434
+}
+]

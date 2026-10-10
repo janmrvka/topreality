@@ -1,0 +1,372 @@
+<title>Cashflow nemovitostí</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+/* Layout: ledger. Úzká hlavička se sazbou, řádek souhrnu, lišta filtrů, tabulka seřaditelná podle sloupců (na mobilu karty). */
+:root {
+  --bg: #f5f6f4;
+  --surface: #ffffff;
+  --fg: #1c2321;
+  --muted: #5e6a66;
+  --line: #dde2df;
+  --accent: #1f5f73;
+  --accent-soft: #e2eef1;
+  --pos: #23794a;
+  --pos-soft: #e1f2e7;
+  --neg: #b23a2e;
+  --neg-soft: #f8e3e0;
+  --warn: #9a6a12;
+  --warn-soft: #f7ecd6;
+  --font-ui: "Instrument Sans", "Helvetica Neue", Arial, sans-serif;
+  --font-num: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #121615; --surface: #1a201e; --fg: #e6ebe8; --muted: #94a19c; --line: #2b3431;
+    --accent: #7cc0d3; --accent-soft: #1d3138; --pos: #6fcf94; --pos-soft: #183326;
+    --neg: #f08a7e; --neg-soft: #3a1f1c; --warn: #e2b665; --warn-soft: #362b17; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #121615; --surface: #1a201e; --fg: #e6ebe8; --muted: #94a19c; --line: #2b3431;
+  --accent: #7cc0d3; --accent-soft: #1d3138; --pos: #6fcf94; --pos-soft: #183326;
+  --neg: #f08a7e; --neg-soft: #3a1f1c; --warn: #e2b665; --warn-soft: #362b17; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--fg); font-family: var(--font-ui); font-size: 14px; line-height: 1.45; }
+.wrap { max-width: 1320px; margin: 0 auto; padding-inline: 16px; padding-block: 20px 48px; display: grid; gap: 16px; }
+header { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px 24px; }
+h1 { font-size: 22px; font-weight: 700; margin: 0; letter-spacing: -0.01em; text-wrap: balance; }
+.params { color: var(--muted); font-size: 13px; display: flex; flex-wrap: wrap; gap: 4px 16px; }
+.params b { color: var(--fg); font-family: var(--font-num); font-weight: 500; }
+.num { font-family: var(--font-num); font-variant-numeric: tabular-nums; }
+
+.summary { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+.summary div { background: var(--surface); padding: 12px 14px; display: grid; gap: 2px; }
+.summary span { font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); }
+.summary strong { font-family: var(--font-num); font-size: 20px; font-weight: 600; }
+
+.filters { display: flex; flex-wrap: wrap; gap: 10px 14px; align-items: end; background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 12px 14px; }
+.f { display: grid; gap: 4px; min-width: 0; }
+.f label, .f .lbl { font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); }
+select, input[type="search"], input[type="number"] { font: inherit; color: var(--fg); background: var(--bg); border: 1px solid var(--line); border-radius: 6px; padding: 6px 8px; min-width: 0; }
+input[type="number"] { width: 120px; font-family: var(--font-num); }
+input[type="search"] { width: 180px; }
+.seg { display: inline-flex; border: 1px solid var(--line); border-radius: 6px; overflow: hidden; }
+.seg button { font: inherit; background: var(--bg); color: var(--fg); border: 0; padding: 6px 10px; cursor: pointer; }
+.seg button + button { border-left: 1px solid var(--line); }
+.seg button[aria-pressed="true"] { background: var(--accent); color: var(--surface); }
+.checks { display: flex; flex-wrap: wrap; gap: 4px 10px; padding-block: 5px; }
+.checks label { display: inline-flex; gap: 4px; align-items: center; font-size: 13px; text-transform: none; letter-spacing: 0; color: var(--fg); cursor: pointer; }
+button:focus-visible, select:focus-visible, input:focus-visible, a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.reset { font: inherit; font-size: 13px; background: none; border: 0; color: var(--accent); cursor: pointer; padding: 6px 0; text-decoration: underline; }
+
+.count { color: var(--muted); font-size: 13px; }
+.tablewrap { overflow-x: auto; background: var(--surface); border: 1px solid var(--line); border-radius: 8px; }
+table { border-collapse: collapse; width: 100%; min-width: 980px; }
+th, td { padding: 9px 10px; text-align: left; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); font-weight: 600; white-space: nowrap; position: sticky; top: 0; background: var(--surface); }
+th.sort { cursor: pointer; user-select: none; }
+th.sort:hover { color: var(--fg); }
+th.sort[aria-sort="ascending"]::after { content: " ↑"; color: var(--accent); }
+th.sort[aria-sort="descending"]::after { content: " ↓"; color: var(--accent); }
+td.r, th.r { text-align: right; }
+tbody tr:hover { background: var(--accent-soft); }
+tbody tr { cursor: pointer; }
+.title a { color: var(--fg); font-weight: 600; text-decoration: none; }
+.title a:hover { color: var(--accent); text-decoration: underline; }
+.sub { color: var(--muted); font-size: 12px; }
+.cf { font-family: var(--font-num); font-weight: 600; white-space: nowrap; padding: 2px 6px; border-radius: 4px; display: inline-block; }
+.cf.pos { color: var(--pos); background: var(--pos-soft); }
+.cf.neg { color: var(--neg); background: var(--neg-soft); }
+.pill { display: inline-block; font-size: 11px; padding: 1px 7px; border-radius: 999px; border: 1px solid var(--line); white-space: nowrap; }
+.pill.vysoka, .pill.inz { color: var(--pos); border-color: currentColor; }
+.pill.stredni { color: var(--warn); border-color: currentColor; }
+.pill.nizka { color: var(--neg); border-color: currentColor; }
+.pill.new { background: var(--accent); color: var(--surface); border-color: var(--accent); }
+.pill.drop { color: var(--pos); border-color: currentColor; }
+.typ { font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--accent); font-weight: 600; }
+tr.detail td { background: var(--bg); cursor: default; }
+.det { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 10px 24px; font-size: 13px; }
+.det dt { font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); }
+.det dd { margin: 2px 0 0; min-width: 0; overflow-wrap: anywhere; }
+.det blockquote { margin: 4px 0 0; padding-left: 10px; border-left: 2px solid var(--line); color: var(--muted); font-style: italic; }
+.det a { color: var(--accent); }
+.empty { padding: 40px 16px; text-align: center; color: var(--muted); }
+.note { color: var(--muted); font-size: 12px; max-width: 80ch; }
+
+/* mobil: karty */
+.cards { display: none; gap: 10px; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 12px; display: grid; gap: 6px; }
+.card .row { display: flex; justify-content: space-between; gap: 8px; align-items: baseline; flex-wrap: wrap; }
+.card .kv { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+.card .kv div { display: grid; }
+.card .kv span { font-size: 10px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); }
+.mobsort { display: none; }
+@media (max-width: 760px) {
+  .tablewrap { display: none; }
+  .cards { display: grid; }
+  .mobsort { display: grid; }
+  input[type="search"] { width: 100%; }
+  .f.grow { flex: 1 1 100%; }
+}
+</style>
+
+<div class="wrap">
+  <header>
+    <h1>Cashflow nemovitostí</h1>
+    <div class="params" id="params">Načítám data…</div>
+  </header>
+
+  <section class="summary" id="summary" aria-label="Souhrn"></section>
+
+  <section class="filters" aria-label="Filtry">
+    <div class="f">
+      <span class="lbl">Typ</span>
+      <div class="seg" id="f-typ" role="group" aria-label="Typ nemovitosti">
+        <button type="button" data-v="" aria-pressed="true">Vše</button>
+        <button type="button" data-v="byt" aria-pressed="false">Byty</button>
+        <button type="button" data-v="činžák" aria-pressed="false">Činžáky</button>
+      </div>
+    </div>
+    <div class="f"><label for="f-cf">Cashflow od (Kč/měs.)</label><input type="number" id="f-cf" step="500" value="-5000"></div>
+    <div class="f"><label for="f-cena">Cena do (Kč)</label><input type="number" id="f-cena" step="500000" value="30000000"></div>
+    <div class="f"><label for="f-kraj">Kraj</label><select id="f-kraj"><option value="">Všechny kraje</option></select></div>
+    <div class="f grow"><label for="f-q">Obec nebo ulice</label><input type="search" id="f-q" placeholder="např. Ostrava"></div>
+    <div class="f"><label for="f-disp">Dispozice</label><select id="f-disp"><option value="">Všechny</option></select></div>
+    <div class="f">
+      <span class="lbl">Jistota nájmu</span>
+      <div class="checks" id="f-jist">
+        <label><input type="checkbox" id="j-inz" value="z inzerátu" checked> z inzerátu</label>
+        <label><input type="checkbox" id="j-vys" value="vysoká" checked> vysoká</label>
+        <label><input type="checkbox" id="j-str" value="střední" checked> střední</label>
+        <label><input type="checkbox" id="j-niz" value="nízká" checked> nízká</label>
+      </div>
+    </div>
+    <div class="f">
+      <span class="lbl">Zobrazit</span>
+      <div class="checks">
+        <label><input type="checkbox" id="f-new"> jen nové (48 h)</label>
+        <label><input type="checkbox" id="f-drop"> jen zlevněné</label>
+        <label><input type="checkbox" id="f-sus"> i podezřelé</label>
+      </div>
+    </div>
+    <div class="f mobsort"><label for="f-sort">Řadit</label>
+      <select id="f-sort">
+        <option value="cashflow:desc">Cashflow ↓</option>
+        <option value="cashflow:asc">Cashflow ↑</option>
+        <option value="vynos:desc">Výnos ↓</option>
+        <option value="cena:asc">Cena ↑</option>
+        <option value="cena:desc">Cena ↓</option>
+        <option value="cena_m2:asc">Cena za m² ↑</option>
+        <option value="first_seen:desc">Nejnovější</option>
+      </select>
+    </div>
+    <button type="button" class="reset" id="reset">Zrušit filtry</button>
+  </section>
+
+  <div class="count" id="count"></div>
+
+  <div class="tablewrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Nemovitost</th>
+          <th class="sort" data-k="obec">Obec</th>
+          <th class="sort r" data-k="plocha">Plocha</th>
+          <th class="sort r" data-k="cena">Cena</th>
+          <th class="sort r" data-k="cena_m2">Kč/m²</th>
+          <th class="sort r" data-k="najem">Nájem</th>
+          <th class="sort r" data-k="splatka">Splátka</th>
+          <th class="sort r" data-k="cashflow" aria-sort="descending">Cashflow</th>
+          <th class="sort r" data-k="vynos">Výnos</th>
+          <th class="sort" data-k="jistota">Jistota</th>
+          <th class="sort" data-k="first_seen">Přidáno</th>
+        </tr>
+      </thead>
+      <tbody id="tbody"></tbody>
+    </table>
+  </div>
+  <div class="cards" id="cards"></div>
+
+  <p class="note" id="note"></p>
+</div>
+
+<script>
+const $ = (s) => document.querySelector(s);
+const fmt = new Intl.NumberFormat("cs-CZ");
+const kc = (v) => v == null ? "–" : fmt.format(Math.round(v)) + " Kč";
+const mil = (v) => (v / 1e6).toLocaleString("cs-CZ", { maximumFractionDigits: 2 }) + " mil.";
+const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const JIST_ORDER = { "z inzerátu": 4, "vysoká": 3, "střední": 2, "nízká": 1 };
+const JIST_CLASS = { "z inzerátu": "inz", "vysoká": "vysoka", "střední": "stredni", "nízká": "nizka" };
+
+let DATA = [], META = {};
+const state = { typ: "", sortK: "cashflow", sortDir: "desc", open: null };
+
+function load() {
+  try {
+    const s = JSON.parse(localStorage.getItem("cf-filters") || "{}");
+    if (s.typ != null) state.typ = s.typ;
+    for (const id of ["f-cf", "f-cena", "f-q"]) if (s[id] != null) $("#" + id).value = s[id];
+    if (s.sortK) { state.sortK = s.sortK; state.sortDir = s.sortDir; }
+  } catch (e) {}
+}
+function save() {
+  try {
+    localStorage.setItem("cf-filters", JSON.stringify({ typ: state.typ, "f-cf": $("#f-cf").value, "f-cena": $("#f-cena").value, "f-q": $("#f-q").value, sortK: state.sortK, sortDir: state.sortDir }));
+  } catch (e) {}
+}
+
+function parseDate(s) { return s ? new Date(s.replace(" ", "T")) : null; }
+function isNew(x) { const d = parseDate(x.first_seen); return d && (Date.now() - d) < 48 * 3600e3; }
+function isDrop(x) { return x.cena_puvodni && x.cena < x.cena_puvodni; }
+
+function filtered() {
+  const cf = Number($("#f-cf").value || -1e9), cena = Number($("#f-cena").value || 1e12);
+  const kraj = $("#f-kraj").value, disp = $("#f-disp").value, q = $("#f-q").value.trim().toLowerCase();
+  const jist = new Set([...document.querySelectorAll("#f-jist input:checked")].map((i) => i.value));
+  const onlyNew = $("#f-new").checked, onlyDrop = $("#f-drop").checked, sus = $("#f-sus").checked;
+  const out = DATA.filter((x) =>
+    (!state.typ || x.typ === state.typ) && x.cashflow >= cf && x.cena <= cena &&
+    (!kraj || x.kraj === kraj) && (!disp || x.dispozice === disp) && jist.has(x.jistota) &&
+    (!q || (x.obec + " " + (x.ulice || "") + " " + (x.okres || "")).toLowerCase().includes(q)) &&
+    (!onlyNew || isNew(x)) && (!onlyDrop || isDrop(x)) && (sus || !x.podezrele));
+  const k = state.sortK, dir = state.sortDir === "asc" ? 1 : -1;
+  const val = (x) => k === "jistota" ? JIST_ORDER[x.jistota] || 0 : x[k];
+  out.sort((a, b) => {
+    const va = val(a), vb = val(b);
+    if (va == null && vb == null) return 0;
+    if (va == null) return 1;
+    if (vb == null) return -1;
+    return (typeof va === "string" ? va.localeCompare(vb, "cs") : va - vb) * dir;
+  });
+  return out;
+}
+
+function badges(x) {
+  let b = "";
+  if (isNew(x)) b += ' <span class="pill new">nové</span>';
+  if (x.podezrele) b += ' <span class="pill nizka">ověřit data</span>';
+  if (isDrop(x)) b += ` <span class="pill drop">zlevněno o ${fmt.format(x.cena_puvodni - x.cena)} Kč</span>`;
+  return b;
+}
+function cfCell(v) { return `<span class="cf ${v >= 0 ? "pos" : "neg"}">${v >= 0 ? "+" : "−"}${fmt.format(Math.abs(v))} Kč</span>`; }
+function jistPill(x) { return `<span class="pill ${JIST_CLASS[x.jistota] || ""}">${esc(x.jistota)}</span>`; }
+function sources(x) {
+  const all = [{ zdroj: x.zdroj, url: x.url }, ...(x.dalsi || [])];
+  return all.map((s) => `<a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.zdroj)}</a>`).join(" · ");
+}
+function detailHtml(x) {
+  return `<dl class="det">
+    <div><dt>Odhad nájmu</dt><dd>${kc(x.najem)} měsíčně${x.najem_m2 ? ` (${fmt.format(x.najem_m2)} Kč/m²)` : ""}<br><span class="sub">${esc(x.najem_zdroj)}</span>
+      ${x.najem_citace ? `<blockquote>„${esc(x.najem_citace)}“</blockquote>` : ""}</dd></div>
+    <div><dt>Splátka</dt><dd>${kc(x.splatka)} měsíčně z úvěru ${kc(x.cena * (META.ltv || 1))}<br><span class="sub">${(META.sazba * 100).toLocaleString("cs-CZ")} %, ${META.splatnost} let</span></dd></div>
+    <div><dt>Lokalita</dt><dd>${esc([x.ulice, x.obec].filter(Boolean).join(", "))}<br><span class="sub">okres ${esc(x.okres || "–")}, ${esc(x.kraj || "")}, ${fmt.format(x.obyvatel)} obyvatel</span></dd></div>
+    <div><dt>Inzerát</dt><dd>${sources(x)}<br><span class="sub">poprvé viděno ${esc(x.first_seen)}${x.cena_puvodni && x.cena_puvodni !== x.cena ? `, původní cena ${kc(x.cena_puvodni)}` : ""}</span></dd></div>
+  </dl>`;
+}
+
+function render() {
+  const rows = filtered();
+  $("#count").textContent = `Zobrazeno ${fmt.format(rows.length)} z ${fmt.format(DATA.length)} nabídek`;
+  document.querySelectorAll("th.sort").forEach((th) => th.setAttribute("aria-sort", th.dataset.k === state.sortK ? (state.sortDir === "asc" ? "ascending" : "descending") : "none"));
+  $("#f-sort").value = `${state.sortK}:${state.sortDir}`;
+  document.querySelectorAll("#f-typ button").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.v === state.typ)));
+
+  const shown = rows.slice(0, 600);
+  if (!rows.length) {
+    $("#tbody").innerHTML = `<tr><td colspan="11" class="empty">Filtrům nic neodpovídá. Zkus snížit hranici cashflow nebo zrušit filtry.</td></tr>`;
+    $("#cards").innerHTML = `<div class="empty">Filtrům nic neodpovídá. Zkus snížit hranici cashflow nebo zrušit filtry.</div>`;
+    return;
+  }
+  $("#tbody").innerHTML = shown.map((x) => `
+    <tr data-id="${esc(x.id)}">
+      <td class="title"><div class="typ">${x.typ === "byt" ? "Byt" : "Činžovní dům"} · ${esc(x.zdroj)}${x.dalsi ? " +" + x.dalsi.length : ""}</div>
+        <a href="${esc(x.url)}" target="_blank" rel="noopener">${esc(x.nazev)}</a>${badges(x)}</td>
+      <td>${esc(x.obec)}<div class="sub">${esc(x.ulice || x.okres || "")}</div></td>
+      <td class="r num">${x.plocha ? fmt.format(x.plocha) + " m²" : "–"}</td>
+      <td class="r num">${kc(x.cena)}</td>
+      <td class="r num">${x.cena_m2 ? fmt.format(x.cena_m2) : "–"}</td>
+      <td class="r num">${kc(x.najem)}</td>
+      <td class="r num">${kc(x.splatka)}</td>
+      <td class="r">${cfCell(x.cashflow)}</td>
+      <td class="r num">${x.vynos.toLocaleString("cs-CZ")} %</td>
+      <td>${jistPill(x)}</td>
+      <td class="num sub">${esc((x.first_seen || "").slice(5, 10).split("-").reverse().join(". "))}.</td>
+    </tr>${state.open === x.id ? `<tr class="detail"><td colspan="11">${detailHtml(x)}</td></tr>` : ""}`).join("");
+  $("#cards").innerHTML = shown.slice(0, 200).map((x) => `
+    <article class="card">
+      <div class="row"><span class="typ">${x.typ === "byt" ? "Byt" : "Činžovní dům"} · ${esc(x.obec)}</span>${cfCell(x.cashflow)}</div>
+      <div class="title"><a href="${esc(x.url)}" target="_blank" rel="noopener">${esc(x.nazev)}</a>${badges(x)}</div>
+      <div class="kv">
+        <div><span>Cena</span><b class="num">${mil(x.cena)}</b></div>
+        <div><span>Nájem</span><b class="num">${kc(x.najem)}</b></div>
+        <div><span>Výnos</span><b class="num">${x.vynos.toLocaleString("cs-CZ")} %</b></div>
+      </div>
+      <div class="row sub"><span>${esc(x.najem_zdroj)}</span>${jistPill(x)}</div>
+    </article>`).join("");
+  if (rows.length > shown.length) $("#count").textContent += ` (v tabulce prvních ${shown.length}, zúži filtry)`;
+}
+
+function summary() {
+  const m = META;
+  $("#params").innerHTML = `
+    <span>Sazba <b>${(m.sazba * 100).toLocaleString("cs-CZ")} %</b></span>
+    <span>Splatnost <b>${m.splatnost} let</b></span>
+    <span>Financování <b>${Math.round(m.ltv * 100)} %</b></span>
+    <span>Splátka na 1 mil. <b>${fmt.format(m.splatka_na_milion)} Kč</b></span>
+    <span>Aktualizace <b>${esc(m.aktualizace)}</b></span>`;
+  const ok = DATA.filter((x) => !x.podezrele);
+  const pos = ok.filter((x) => x.cashflow >= 0).length;
+  const novych = ok.filter(isNew).length;
+  const byty = ok.filter((x) => x.typ === "byt").length;
+  const best = ok.reduce((a, x) => Math.max(a, x.cashflow), -Infinity);
+  $("#summary").innerHTML = `
+    <div><span>Nabídek</span><strong>${fmt.format(ok.length)}</strong></div>
+    <div><span>Kladné cashflow</span><strong>${fmt.format(pos)}</strong></div>
+    <div><span>Byty / činžáky</span><strong>${fmt.format(byty)} / ${fmt.format(ok.length - byty)}</strong></div>
+    <div><span>Nové za 48 h</span><strong>${fmt.format(novych)}</strong></div>
+    <div><span>Nejlepší cashflow</span><strong>${isFinite(best) ? (best >= 0 ? "+" : "−") + fmt.format(Math.abs(best)) : "–"}</strong></div>`;
+  $("#note").textContent = `Cashflow = odhad měsíčního nájmu − anuitní splátka úvěru ve výši ${Math.round(m.ltv * 100)} % kupní ceny. Bez nákladů na správu, fond oprav, pojištění a neobsazenost. Nájem bytů je medián Kč/m² z aktuálních pronájmů stejné dispozice v obci (${fmt.format(m.najmu_v_modelu || 0)} inzerátů pronájmu z posledních 14 dní). U činžáků se bere nájem uvedený v inzerátu, jinak odhad z užitné plochy. Skryté jsou podezřelé nabídky s hrubým výnosem nad 15 % nebo bytem přes dvojnásobek obvyklé plochy dispozice (obvykle chyba v inzerátu, nebytový prostor nebo dům k demolici), zobrazíš je zaškrtnutím „i podezřelé“. Obce od ${fmt.format(m.min_obyvatel)} obyvatel (${m.obci} obcí, ČSÚ). Zdroje: Sreality, Bezrealitky, iDNES Reality.`;
+  const kraje = [...new Set(DATA.map((x) => x.kraj).filter(Boolean))].sort((a, b) => a.localeCompare(b, "cs"));
+  $("#f-kraj").insertAdjacentHTML("beforeend", kraje.map((k) => `<option>${esc(k)}</option>`).join(""));
+  const order = ["1+kk", "1+1", "2+kk", "2+1", "3+kk", "3+1", "4+kk", "4+1", "5+kk", "5+1", "6 a více", "Atypický", "Pokoj"];
+  const disp = [...new Set(DATA.map((x) => x.dispozice).filter(Boolean))].sort((a, b) => (order.indexOf(a) + 99) % 99 - (order.indexOf(b) + 99) % 99);
+  $("#f-disp").insertAdjacentHTML("beforeend", disp.map((d) => `<option>${esc(d)}</option>`).join(""));
+}
+
+function bind() {
+  document.querySelectorAll("#f-typ button").forEach((b) => b.addEventListener("click", () => { state.typ = b.dataset.v; save(); render(); }));
+  ["f-cf", "f-cena", "f-q", "f-kraj", "f-disp", "f-new", "f-drop", "f-sus"].forEach((id) => $("#" + id).addEventListener("input", () => { save(); render(); }));
+  document.querySelectorAll("#f-jist input").forEach((i) => i.addEventListener("change", render));
+  document.querySelectorAll("th.sort").forEach((th) => th.addEventListener("click", () => {
+    const k = th.dataset.k;
+    if (state.sortK === k) state.sortDir = state.sortDir === "asc" ? "desc" : "asc";
+    else { state.sortK = k; state.sortDir = ["obec", "cena", "cena_m2", "splatka"].includes(k) ? "asc" : "desc"; }
+    save(); render();
+  }));
+  $("#f-sort").addEventListener("change", (e) => { [state.sortK, state.sortDir] = e.target.value.split(":"); save(); render(); });
+  $("#tbody").addEventListener("click", (e) => {
+    if (e.target.closest("a")) return;
+    const tr = e.target.closest("tr[data-id]");
+    if (!tr) return;
+    state.open = state.open === tr.dataset.id ? null : tr.dataset.id;
+    render();
+  });
+  $("#reset").addEventListener("click", () => {
+    state.typ = ""; $("#f-cf").value = META.cashflow_min ?? -5000; $("#f-cena").value = META.cena_max ?? 30000000;
+    $("#f-q").value = ""; $("#f-kraj").value = ""; $("#f-disp").value = ""; $("#f-new").checked = false; $("#f-drop").checked = false; $("#f-sus").checked = false;
+    document.querySelectorAll("#f-jist input").forEach((i) => (i.checked = true));
+    save(); render();
+  });
+}
+
+load();
+bind();
+fetch("data.json", { cache: "no-store" })
+  .then((r) => { if (!r.ok) throw new Error(r.status); return r.json(); })
+  .then((d) => { DATA = d.nabidky; META = d.meta; summary(); render(); })
+  .catch(() => { $("#params").textContent = "Data se nepodařilo načíst. Zkus stránku obnovit."; });
+</script>
