@@ -18,6 +18,9 @@ permissions:
   pages: write
   id-token: write
 
+env:
+  TZ: Europe/Prague
+
 concurrency:
   group: reality
   cancel-in-progress: false
